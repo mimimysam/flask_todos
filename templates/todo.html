@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<style>
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Concert One", cursive;
+    font-size: 16px;
+}
+
+input {
+    height: 50px;
+    width: 100%;
+    padding: 6px;
+    margin-top: 10px;
+    font-size: 2.4em;
+    border: none;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+    background-color: white;
+}
+
+li {
+    height: 50px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding: 5px;
+    background-color: #ff5d88;
+    color: white;
+    font-size: 1.5em;
+    line-height: 1.5;
+}
+
+li:before {
+    content: "\200B";
+    position: absolute;
+}
+
+li::after {
+    content: " ";
+    display: block;
+    clear: both;
+}
+
+li button {
+    float: right;
+    border: none;
+    height: 40px;
+    cursor: pointer;
+    background-color: #ff9500;
+    color: white;
+    font-size: 1em;
+}
+
+li button:hover {
+    background-color: #febc5d;
+}
+
+.todos {
+    width: 800px;
+    margin: 0 auto;
+    margin-top: 40px;
+}
+
+#link {
+    font-size: medium;
+    float: right;
+    margin-right: 5px;
+    font-weight: bolder;
+}
+
+#complete {
+    text-decoration: line-through;
+}
+
+</style>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <!-- <link rel="stylesheet" href="index.css" /> -->
+    <title>Todo List</title>
+</head>
+
+<body>
+    <div class="todos">
+        <form id="todo-form" action="/add" method="POST">
+            <label for="todo-text">Add a Todo:</label>
+            <input type="text" placeholder="What needs to be done?" name="todo-text" class="task" id="todo-text" autocomplete="off"/>
+        </form>
+        <p>Todo Count: <span id="todo-count"></span></p>
+        <ul id="todo-list">
+            {% for todo in todos %}
+
+            {% if todo.complete == True %}
+            <li id="complete">
+                {{todo.task}}
+                <a href="/delete/{{ todo.id }}" id="link">Delete</a>
+                <a href="" id="link" class="edit">Edit</a>
+                <a href="/mark_complete/{{ todo.id }}" id="link">Completed</a>
+            </li>
+            {% else %}
+            <li id="task">
+                {{todo.task}}
+                <a href="/delete/{{ todo.id }}" id="link">Delete</a>
+                <a href="" id="link" class="edit">Edit</a>
+                <a href="/mark_complete/{{ todo.id }}" id="link">Completed</a>
+            </li>
+            {% endif %}
+
+            {% endfor %}
+        </ul>
+    </div>
+    <script src="static/js/index.js"></script>
+</body>
+
+</html>
